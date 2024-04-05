@@ -1,0 +1,6 @@
+services:
+    odiseo_sylius_amazon_fba_plugin.assigner.shipment_date:
+        class: Odiseo\SyliusAmazonFBAPlugin\Assigner\ShipmentDateAssigner
+        public: true
+        arguments:
+            - '@odiseo_sylius_amazon_fba_plugin.api.amazon_fba_manager'

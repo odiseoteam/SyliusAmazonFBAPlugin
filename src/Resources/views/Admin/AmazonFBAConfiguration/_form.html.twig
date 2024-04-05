@@ -1,0 +1,18 @@
+{{ form_errors(form) }}
+
+<div class="ui two column stackable grid">
+    <div class="column">
+        <div class="ui segment">
+            {{ form_row(form.code) }}
+            {{ form_row(form.enabled) }}
+        </div>
+    </div>
+    <div class="column">
+        <div class="ui segment">
+            {{ form_row(form.clientId) }}
+            {{ form_row(form.clientSecret) }}
+            {{ form_row(form.refreshToken) }}
+            {{ form_row(form.sandbox) }}
+        </div>
+    </div>
+</div>

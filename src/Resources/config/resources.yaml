@@ -1,0 +1,2 @@
+imports:
+    - { resource: resources/amazon_fba_configuration.yaml }

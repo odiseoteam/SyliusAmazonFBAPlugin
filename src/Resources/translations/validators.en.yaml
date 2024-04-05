@@ -1,0 +1,18 @@
+odiseo_sylius_amazon_fba_plugin:
+    amazon_fba_configuration:
+        code:
+            unique: There is an existing configuration with this code.
+            not_blank: Code cannot be blank.
+            regex: Code can only be comprised of letters, numbers, dashes and underscores.
+        client_id:
+            not_blank: Client ID cannot be blank.
+            min_length: Client ID must be at least {{ limit }} characters long.
+            max_length: Client ID can not be longer than {{ limit }} characters.
+        client_secret:
+            not_blank: Client secret cannot be blank.
+            min_length: Client secret must be at least {{ limit }} characters long.
+            max_length: Client secret can not be longer than {{ limit }} characters.
+        refresh_token:
+            not_blank: Refresh token cannot be blank.
+            min_length: Refresh token must be at least {{ limit }} characters long.
+            max_length: Refresh token can not be longer than {{ limit }} characters.

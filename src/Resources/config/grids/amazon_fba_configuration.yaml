@@ -1,0 +1,45 @@
+sylius_grid:
+    grids:
+        odiseo_sylius_amazon_fba_plugin_amazon_fba_configuration:
+            driver:
+                name: doctrine/orm
+                options:
+                    class: "%odiseo_sylius_amazon_fba_plugin.model.amazon_fba_configuration.class%"
+            sorting:
+                createdAt: desc
+            fields:
+                code:
+                    type: string
+                    label: sylius.ui.code
+                    sortable: ~
+                enabled:
+                    type: twig
+                    label: sylius.ui.enabled
+                    sortable: ~
+                    options:
+                        template: "@SyliusUi/Grid/Field/enabled.html.twig"
+                createdAt:
+                    type: datetime
+                    label: sylius.ui.creation_date
+                    sortable: ~
+                    options:
+                        format: d-m-Y H:i
+            filters:
+                code:
+                    type: string
+                    label: sylius.ui.code
+                enabled:
+                    type: boolean
+                    label: sylius.ui.enabled
+                createdAt:
+                    type: date
+                    label: sylius.ui.creation_date
+            actions:
+                main:
+                    create:
+                        type: create
+                item:
+                    update:
+                        type: update
+                    delete:
+                        type: delete

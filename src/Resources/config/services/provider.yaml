@@ -1,0 +1,5 @@
+services:
+    odiseo_sylius_amazon_fba_plugin.provider.enabled_amazon_fba_configuration:
+        class: Odiseo\SyliusAmazonFBAPlugin\Provider\EnabledAmazonFBAConfigurationProvider
+        arguments:
+            - '@odiseo_sylius_amazon_fba_plugin.repository.amazon_fba_configuration'

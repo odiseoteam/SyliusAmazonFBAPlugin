@@ -1,0 +1,13 @@
+services:
+    odiseo_sylius_amazon_fba_plugin.fixture.example_factory.amazon_fba_configuration:
+        class: Odiseo\SyliusAmazonFBAPlugin\Fixture\Factory\AmazonFBAConfigurationExampleFactory
+        arguments:
+            - '@odiseo_sylius_amazon_fba_plugin.factory.amazon_fba_configuration'
+
+    odiseo_sylius_amazon_fba_plugin.fixture.amazon_fba_configuration:
+        class: Odiseo\SyliusAmazonFBAPlugin\Fixture\AmazonFBAConfigurationFixture
+        arguments:
+            - '@odiseo_sylius_amazon_fba_plugin.manager.amazon_fba_configuration'
+            - '@odiseo_sylius_amazon_fba_plugin.fixture.example_factory.amazon_fba_configuration'
+        tags:
+            - { name: sylius_fixtures.fixture }

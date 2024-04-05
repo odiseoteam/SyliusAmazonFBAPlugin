@@ -1,0 +1,8 @@
+services:
+    odiseo_sylius_amazon_fba_plugin.form.type.amazon_fba_configuration:
+        class: Odiseo\SyliusAmazonFBAPlugin\Form\Type\AmazonFBAConfigurationType
+        arguments:
+            - '%odiseo_sylius_amazon_fba_plugin.model.amazon_fba_configuration.class%'
+            - ['odiseo']
+        tags:
+            - { name: form.type, alias: odiseo_sylius_amazon_fba_configuration }

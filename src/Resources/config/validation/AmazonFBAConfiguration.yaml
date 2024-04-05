@@ -1,0 +1,45 @@
+Odiseo\SyliusAmazonFBAPlugin\Entity\AmazonFBAConfiguration:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+            fields: [code]
+            message: 'odiseo_sylius_amazon_fba_plugin.amazon_fba_configuration.code.unique'
+            groups: ['odiseo']
+    properties:
+        code:
+            - NotBlank:
+                message: 'odiseo_sylius_amazon_fba_plugin.amazon_fba_configuration.code.not_blank'
+                groups: ['odiseo']
+            - Regex:
+                message: 'odiseo_sylius_amazon_fba_plugin.amazon_fba_configuration.code.regex'
+                pattern: /^[\w-]*$/
+                groups: ['odiseo']
+        clientId:
+            - NotBlank:
+                message: 'odiseo_sylius_amazon_fba_plugin.amazon_fba_configuration.client_id.not_blank'
+                groups: ['odiseo']
+            - Length:
+                min: 2
+                max: 250
+                minMessage: 'odiseo_sylius_amazon_fba_plugin.amazon_fba_configuration.client_id.min_length'
+                maxMessage: 'odiseo_sylius_amazon_fba_plugin.amazon_fba_configuration.client_id.max_length'
+                groups: ['odiseo']
+        clientSecret:
+            - NotBlank:
+                message: 'odiseo_sylius_amazon_fba_plugin.amazon_fba_configuration.client_secret.not_blank'
+                groups: ['odiseo']
+            - Length:
+                min: 2
+                max: 250
+                minMessage: 'odiseo_sylius_amazon_fba_plugin.amazon_fba_configuration.client_secret.min_length'
+                maxMessage: 'odiseo_sylius_amazon_fba_plugin.amazon_fba_configuration.client_secret.max_length'
+                groups: ['odiseo']
+        refreshToken:
+            - NotBlank:
+                message: 'odiseo_sylius_amazon_fba_plugin.amazon_fba_configuration.refresh_token.not_blank'
+                groups: ['odiseo']
+            - Length:
+                min: 2
+                max: 250
+                minMessage: 'odiseo_sylius_amazon_fba_plugin.amazon_fba_configuration.refresh_token.min_length'
+                maxMessage: 'odiseo_sylius_amazon_fba_plugin.amazon_fba_configuration.refresh_token.max_length'
+                groups: ['odiseo']

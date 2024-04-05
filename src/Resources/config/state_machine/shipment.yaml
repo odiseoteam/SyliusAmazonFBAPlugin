@@ -1,0 +1,21 @@
+winzou_state_machine:
+    sylius_shipment:
+        callbacks:
+            before:
+                odiseo_sylius_amazon_fba_plugin_assign_date:
+                    on: ["create"]
+                    do: ["@odiseo_sylius_amazon_fba_plugin.assigner.shipment_date", "assignDate"]
+                    args: ["object"]
+            after:
+                odiseo_sylius_amazon_fba_plugin_create_order:
+                    on: ["create"]
+                    do: ["@odiseo_sylius_amazon_fba_plugin.fulfillment.order", "createOrder"]
+                    args: ["object"]
+                odiseo_sylius_amazon_fba_plugin_confirm_order:
+                    on: ["ship"]
+                    do: ["@odiseo_sylius_amazon_fba_plugin.fulfillment.order", "confirmOrder"]
+                    args: ["object"]
+                odiseo_sylius_amazon_fba_plugin_cancel_order:
+                    on: ["cancel"]
+                    do: ["@odiseo_sylius_amazon_fba_plugin.fulfillment.order", "cancelOrder"]
+                    args: ["object"]

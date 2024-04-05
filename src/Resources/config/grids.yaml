@@ -1,0 +1,2 @@
+imports:
+    - { resource: grids/amazon_fba_configuration.yaml }

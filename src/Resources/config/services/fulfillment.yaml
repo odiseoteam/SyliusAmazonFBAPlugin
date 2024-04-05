@@ -1,0 +1,6 @@
+services:
+    odiseo_sylius_amazon_fba_plugin.fulfillment.order:
+        class: Odiseo\SyliusAmazonFBAPlugin\Fulfillment\OrderFulfillment
+        public: true
+        arguments:
+            - '@odiseo_sylius_amazon_fba_plugin.api.amazon_fba_manager'

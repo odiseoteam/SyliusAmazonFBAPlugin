@@ -1,0 +1,20 @@
+odiseo_sylius_amazon_fba_plugin:
+    ui:
+        amazon_fba_configurations: Amazon FBA configurations
+        edit_amazon_fba_configuration: Edit Amazon FBA configuration
+        new_amazon_fba_configuration: New Amazon FBA configuration
+        manage_configurations: Manage configurations
+    menu:
+        admin:
+            amazon_fba: Amazon FBA
+    form:
+        amazon_fba_configuration:
+            client_id: Client ID
+            client_secret: Client secret
+            refresh_token: Refresh token
+            sandbox: Sandbox
+        shipping_calculator:
+            amazon_fba_rate_configuration:
+                label: Amazon FBA rate
+                speed_category: Speed category
+                default_amount: Default amount

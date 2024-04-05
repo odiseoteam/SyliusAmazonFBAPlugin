@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xmlns:gedmo="http://gediminasm.org/schemas/orm/doctrine-extensions-mapping"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                                      http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <mapped-superclass name="Odiseo\SyliusAmazonFBAPlugin\Entity\AmazonFBAConfiguration" table="odiseo_amazon_fba_configuration">
+        <id name="id" column="id" type="integer">
+            <generator strategy="AUTO"/>
+        </id>
+
+        <field name="code" type="string" unique="true"/>
+        <field name="sandbox" type="boolean"/>
+        <field name="clientId" type="string" column="client_id"/>
+        <field name="clientSecret" type="string" column="client_secret"/>
+        <field name="refreshToken" type="string" column="refresh_token"/>
+        <field name="enabled" type="boolean"/>
+        <field name="createdAt" type="datetime" column="created_at">
+            <gedmo:timestampable on="create"/>
+        </field>
+        <field name="updatedAt" type="datetime" column="updated_at">
+            <gedmo:timestampable on="update"/>
+        </field>
+    </mapped-superclass>
+</doctrine-mapping>

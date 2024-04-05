@@ -1,0 +1,7 @@
+services:
+    odiseo_sylius_amazon_fba_plugin.shipping.calculator.amazon_fba_rate:
+        class: Odiseo\SyliusAmazonFBAPlugin\Shipping\Calculator\AmazonFBARateCalculator
+        arguments:
+            - '@odiseo_sylius_amazon_fba_plugin.api.amazon_fba_manager'
+        tags:
+            - { name: sylius.shipping_calculator, calculator: amazon_fba_rate, form_type: Odiseo\SyliusAmazonFBAPlugin\Form\Type\Shipping\Calculator\ChannelBasedAmazonFBARateConfigurationType, label: odiseo_sylius_amazon_fba_plugin.form.shipping_calculator.amazon_fba_rate_configuration.label }

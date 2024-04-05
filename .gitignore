@@ -1,0 +1,21 @@
+.idea
+.DS_Store
+
+/vendor/
+/node_modules/
+/composer.lock
+/.php_cs.cache
+/.phpunit.result.cache
+
+/etc/build/*
+!/etc/build/.gitignore
+
+/tests/Application/yarn.lock
+
+/behat.yml
+/phpspec.yml
+/phpunit.xml
+
+# Symfony CLI https://symfony.com/doc/current/setup/symfony_server.html#different-php-settings-per-project
+/.php-version
+/php.ini

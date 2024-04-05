@@ -1,0 +1,11 @@
+sylius_resource:
+    resources:
+        odiseo_sylius_amazon_fba_plugin.amazon_fba_configuration:
+            driver: doctrine/orm
+            classes:
+                model: Odiseo\SyliusAmazonFBAPlugin\Entity\AmazonFBAConfiguration
+                interface: Odiseo\SyliusAmazonFBAPlugin\Entity\AmazonFBAConfigurationInterface
+                form: Odiseo\SyliusAmazonFBAPlugin\Form\Type\AmazonFBAConfigurationType
+                repository: Odiseo\SyliusAmazonFBAPlugin\Repository\AmazonFBAConfigurationRepository
+                controller: Sylius\Bundle\ResourceBundle\Controller\ResourceController
+                factory: Sylius\Component\Resource\Factory\Factory

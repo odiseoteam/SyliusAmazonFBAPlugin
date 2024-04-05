@@ -1,0 +1,10 @@
+services:
+    odiseo_sylius_amazon_fba_plugin.event_listener.admin.menu_builder:
+        class: Odiseo\SyliusAmazonFBAPlugin\Menu\AdminMenuListener
+        tags:
+            - { name: kernel.event_listener, event: sylius.menu.admin.main, method: addAdminMenuItems }
+
+    odiseo_sylius_amazon_fba_plugin.event_listener.amazon_fba_aware_listener:
+        class: Odiseo\SyliusAmazonFBAPlugin\Mapping\AmazonFBAAwareListener
+        tags:
+            - { name: doctrine.event_subscriber, connection: default, priority: 99 }

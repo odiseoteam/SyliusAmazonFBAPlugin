@@ -1,0 +1,3 @@
+odiseo_sylius_amazon_fba_plugin_admin:
+    resource: "@OdiseoSyliusAmazonFBAPlugin/Resources/config/routing/admin.yaml"
+    prefix: /admin

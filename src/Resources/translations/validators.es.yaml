@@ -1,0 +1,18 @@
+odiseo_sylius_amazon_fba_plugin:
+    amazon_fba_configuration:
+        code:
+            unique: Ya existe una configuración con este código.
+            not_blank: El código no puede ir vacío.
+            regex: El código solo puede contener letras, números, guiones y guiones bajos.
+        client_id:
+            not_blank: El ID de cliente no puede ir vacío.
+            min_length: El ID de cliente debe tener al menos {{ limit }} caracteres.
+            max_length: El ID de cliente no puede tener más de {{ limit }} caracteres.
+        client_secret:
+            not_blank: El secreto de cliente no puede ir vacío.
+            min_length: El secreto de cliente debe tener al menos {{ limit }} caracteres.
+            max_length: El secreto de cliente no puede tener más de {{ limit }} caracteres.
+        refresh_token:
+            not_blank: El token de refresco no puede ir vacío.
+            min_length: El token de refresco debe tener al menos {{ limit }} caracteres.
+            max_length: El token de refresco no puede tener más de {{ limit }} caracteres.

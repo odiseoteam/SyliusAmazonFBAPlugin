@@ -1,0 +1,2 @@
+odiseo_sylius_amazon_fba_plugin_admin_amazon_fba_configuration:
+    resource: admin/amazon_fba_configuration.yaml

@@ -1,0 +1,4 @@
+imports:
+    - { resource: grids.yaml }
+    - { resource: resources.yaml }
+    - { resource: state_machine.yaml }

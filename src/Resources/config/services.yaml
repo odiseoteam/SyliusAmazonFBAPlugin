@@ -1,0 +1,9 @@
+imports:
+    - { resource: services/api.yaml }
+    - { resource: services/assigner.yaml }
+    - { resource: services/calculator.yaml }
+    - { resource: services/event_listener.yaml }
+    - { resource: services/fixture.yaml }
+    - { resource: services/form.yaml }
+    - { resource: services/fulfillment.yaml }
+    - { resource: services/provider.yaml }
