@@ -11,7 +11,7 @@ use Odiseo\SyliusAmazonFBAPlugin\Provider\EnabledAmazonFBAConfigurationProvider;
 use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-final class AmazonFBAClient
+class AmazonFBAClient
 {
     private const SP_API_SANDBOX_BASE_URL = 'https://sandbox.sellingpartnerapi-eu.amazon.com';
     private const SP_API_PRODUCTION_BASE_URL = 'https://sellingpartnerapi-eu.amazon.com/';
@@ -23,12 +23,12 @@ final class AmazonFBAClient
     private Client $client;
 
     public function __construct(
-        private \Redis $redis,
+        //private \Redis $redis,
         private EnabledAmazonFBAConfigurationProvider $enabledAmazonFBAConfigurationProvider,
     ) {
         $amazonFBAConfiguration = $this->enabledAmazonFBAConfigurationProvider->getConfiguration();
         if (!$amazonFBAConfiguration instanceof AmazonFBAConfigurationInterface) {
-            throw new NotFoundHttpException(
+            throw new \Exception(
                 sprintf('The "%s" has not been found', AmazonFBAConfigurationInterface::class),
             );
         }
@@ -62,11 +62,11 @@ final class AmazonFBAClient
         array $requestBody = [],
         bool $forceGenerateAccessToken = false
     ): ResponseInterface {
-        $accessToken = $this->redis->get('app.amazon_api.access_token');
-        if (!$accessToken || $forceGenerateAccessToken) {
+        //$accessToken = $this->redis->get('app.amazon_api.access_token');
+        //if (!$accessToken || $forceGenerateAccessToken) {
             $accessToken = $this->generateToken();
-            $this->redis->set('app.amazon_api.access_token', $accessToken);
-        }
+        //    $this->redis->set('app.amazon_api.access_token', $accessToken);
+        //}
 
         $fullEndpoint = $this->getSpApiEndpoint($endpoint);
 

@@ -48,6 +48,11 @@ final class AmazonFBAManager
             }
 
             return [];
+        } catch (\Exception $e) {
+            $this->logger->debug('Problem getting rates.');
+            $this->logger->debug($e->getMessage());
+
+            return [];
         }
 
         $arrayResponse = json_decode($response->getBody()->getContents(), true);
@@ -104,6 +109,9 @@ final class AmazonFBAManager
             if (!empty($errors) && !empty($errors[0]['message'])) {
                 $this->logger->debug($errors[0]['message']);;
             }
+        } catch (\Exception $e) {
+            $this->logger->debug('Problem creating order.');
+            $this->logger->debug($e->getMessage());
         }
     }
 
@@ -116,16 +124,28 @@ final class AmazonFBAManager
 
         $bodyRequest = $this->buildFBAOrderBodyRequest($order, $channel, $shippingSpeedCategory, $keepOnHold);
 
-        $this->amazonFBAClient->request(
-            'fba/outbound/2020-07-01/fulfillmentOrders/'.$channel->getCode().'-'.$order->getId(),
-            'PUT',
-            $bodyRequest
-        );
+        try {
+            $this->amazonFBAClient->request(
+                'fba/outbound/2020-07-01/fulfillmentOrders/'.$channel->getCode().'-'.$order->getId(),
+                'PUT',
+                $bodyRequest
+            );
+        } catch (ClientException $e) {
+            $arrayResponse = json_decode((string) $e->getResponse()->getBody(), true);
+            $this->logger->debug('Problem confirming order.');
+            $errors = $arrayResponse['errors'] ?? [];
+            if (!empty($errors) && !empty($errors[0]['message'])) {
+                $this->logger->debug($errors[0]['message']);;
+            }
+        } catch (\Exception $e) {
+            $this->logger->debug('Problem confirming order.');
+            $this->logger->debug($e->getMessage());
+        }
     }
 
     public function cancelFulfillmentOrders(
         OrderInterface $order,
-    ): bool {
+    ): void {
         $channel = $order->getChannel();
 
         try {
@@ -133,11 +153,17 @@ final class AmazonFBAManager
                 '/fba/outbound/2020-07-01/fulfillmentOrders/'.$channel->getCode().'-'.$order->getId().'/cancel',
                 'PUT',
             );
+        } catch (ClientException $e) {
+            $arrayResponse = json_decode((string) $e->getResponse()->getBody(), true);
+            $this->logger->debug('Problem cancelling order.');
+            $errors = $arrayResponse['errors'] ?? [];
+            if (!empty($errors) && !empty($errors[0]['message'])) {
+                $this->logger->debug($errors[0]['message']);;
+            }
         } catch (\Exception $e) {
-            return false;
+            $this->logger->debug('Problem cancelling order.');
+            $this->logger->debug($e->getMessage());
         }
-
-        return true;
     }
 
     public function getInventorySummaries(array $skus): array

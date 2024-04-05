@@ -39,7 +39,7 @@ Odiseo\SyliusAmazonFBAPlugin\Entity\AmazonFBAConfiguration:
                 groups: ['odiseo']
             - Length:
                 min: 2
-                max: 250
+                max: 500
                 minMessage: 'odiseo_sylius_amazon_fba_plugin.amazon_fba_configuration.refresh_token.min_length'
                 maxMessage: 'odiseo_sylius_amazon_fba_plugin.amazon_fba_configuration.refresh_token.max_length'
                 groups: ['odiseo']
