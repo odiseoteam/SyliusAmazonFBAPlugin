@@ -16,6 +16,7 @@
         <field name="clientId" type="string" column="client_id"/>
         <field name="clientSecret" type="string" column="client_secret"/>
         <field name="refreshToken" type="string" length="500" column="refresh_token"/>
+        <field name="countryCode" type="string" column="country_code"/>
         <field name="enabled" type="boolean"/>
         <field name="createdAt" type="datetime" column="created_at">
             <gedmo:timestampable on="create"/>

@@ -5,20 +5,16 @@ declare(strict_types=1);
 namespace Odiseo\SyliusAmazonFBAPlugin\Api;
 
 use GuzzleHttp\Exception\ClientException;
-use Odiseo\SyliusAmazonFBAPlugin\Repository\ShippingMethodRepositoryInterface;
 use Psr\Log\LoggerInterface;
 use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Core\Model\OrderInterface;
-use Sylius\Component\Core\Model\ShippingMethodInterface;
 
 final class AmazonFBAManager
 {
     private array $rates = [];
 
     public function __construct(
-        private string $marketplaceId,
         private AmazonFBAClient $amazonFBAClient,
-        private ShippingMethodRepositoryInterface $shippingMethodRepository,
         private LoggerInterface $logger,
     ) {
     }
@@ -89,7 +85,7 @@ final class AmazonFBAManager
 
     public function createFulfillmentOrders(
         OrderInterface $order,
-        string $shippingSpeedCategory = 'Standard',
+        string $shippingSpeedCategory,
         bool $keepOnHold = true,
     ): void {
         $channel = $order->getChannel();
@@ -117,7 +113,7 @@ final class AmazonFBAManager
 
     public function confirmFulfillmentOrders(
         OrderInterface $order,
-        string $shippingSpeedCategory = 'Standard',
+        string $shippingSpeedCategory,
         bool $keepOnHold = false,
     ): void {
         $channel = $order->getChannel();
@@ -190,25 +186,11 @@ final class AmazonFBAManager
 
         $items = $order->getItems();
         foreach ($items as $item) {
-            if (!$item->getVariant()->isShippingRequired()) {
-                continue;
-            }
             $bodyItems[] = [
                 'quantity' => $item->getQuantity(),
                 'sellerFulfillmentOrderItemId' => $item->getId(),
                 'sellerSku' => $item->getVariant()->getCode(),
             ];
-        }
-
-        $shippingMethods = $this->shippingMethodRepository->findByCalculatorEnabledForChannel($channel, 'amazon_fba_rate');
-
-        $speedCategories = [];
-
-        /** @var ShippingMethodInterface $shippingMethod */
-        foreach ($shippingMethods as $shippingMethod) {
-            if ($speedCategory = $shippingMethod->getConfiguration()[$channel->getCode()]['speed_category'] ?? null) {
-                $speedCategories[] = $speedCategory;
-            }
         }
 
         return [
@@ -222,8 +204,7 @@ final class AmazonFBAManager
                 'phoneNumber' => $address->getPhoneNumber(),
             ],
             'items' => $bodyItems,
-            'marketplaceId' => $this->marketplaceId,
-            'shippingSpeedCategories' => $speedCategories
+            'marketplaceId' => $this->amazonFBAClient->getMarketplaceId(),
         ];
     }
 
@@ -237,9 +218,6 @@ final class AmazonFBAManager
         $address = $order->getShippingAddress();
         $items = $order->getItems();
         foreach ($items as $item) {
-            if (!$item->getVariant()->isShippingRequired()) {
-                continue;
-            }
             $bodyItems[] = [
                 'quantity' => $item->getQuantity(),
                 'sellerFulfillmentOrderItemId' => $item->getId(),
@@ -262,7 +240,7 @@ final class AmazonFBAManager
             'items' => $bodyItems,
             'sellerFulfillmentOrderId' => $channel->getCode().'-'.$order->getId(),
             'shippingSpeedCategory' => $shippingSpeedCategory,
-            'marketplaceId' => $this->marketplaceId,
+            'marketplaceId' => $this->amazonFBAClient->getMarketplaceId(),
             'fulfillmentAction' => $keepOnHold ? 'Hold' : 'Ship',
             'notificationEmails' => [
                 $order->getCustomer()->getEmail(),
@@ -276,9 +254,9 @@ final class AmazonFBAManager
         return [
             'details' => 'true',
             'granularityType' => 'Marketplace',
-            'granularityId' => $this->marketplaceId,
+            'granularityId' => $this->amazonFBAClient->getMarketplaceId(),
             'sellerSkus' => implode(',', $skus),
-            'marketplaceIds' => $this->marketplaceId
+            'marketplaceIds' => $this->amazonFBAClient->getMarketplaceId()
         ];
     }
 }

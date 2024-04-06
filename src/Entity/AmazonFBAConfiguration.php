@@ -24,6 +24,8 @@ class AmazonFBAConfiguration implements AmazonFBAConfigurationInterface
 
     protected ?bool $sandbox = true;
 
+    protected ?string $countryCode = null;
+
     public function __construct()
     {
         $this->createdAt = new \DateTime();
@@ -82,5 +84,15 @@ class AmazonFBAConfiguration implements AmazonFBAConfigurationInterface
     public function setSandbox(?bool $sandbox): void
     {
         $this->sandbox = (bool) $sandbox;
+    }
+
+    public function getCountryCode(): ?string
+    {
+        return $this->countryCode;
+    }
+
+    public function setCountryCode(?string $countryCode): void
+    {
+        $this->countryCode = $countryCode;
     }
 }

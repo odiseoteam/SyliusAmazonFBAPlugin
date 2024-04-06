@@ -9,7 +9,5 @@ services:
     odiseo_sylius_amazon_fba_plugin.api.amazon_fba_manager:
         class: Odiseo\SyliusAmazonFBAPlugin\Api\AmazonFBAManager
         arguments:
-            - '%env(resolve:ODISEO_AMAZON_FBA_MARKETPLACE_ID)%'
             - '@odiseo_sylius_amazon_fba_plugin.api.amazon_fba_client'
-            - '@sylius.repository.shipping_method'
             - '@logger'

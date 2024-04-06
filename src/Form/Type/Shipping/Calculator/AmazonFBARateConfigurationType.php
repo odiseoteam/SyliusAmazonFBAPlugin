@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Odiseo\SyliusAmazonFBAPlugin\Form\Type\Shipping\Calculator;
 
+use Odiseo\SyliusAmazonFBAPlugin\Utils\ShippingCategories;
 use Sylius\Bundle\MoneyBundle\Form\Type\MoneyType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -20,11 +21,7 @@ final class AmazonFBARateConfigurationType extends AbstractType
         $builder
             ->add('speed_category', ChoiceType::class, [
                 'label' => 'odiseo_sylius_amazon_fba_plugin.form.shipping_calculator.amazon_fba_rate_configuration.speed_category',
-                'choices' => [
-                    'Standard' => 'Standard',
-                    'Expedited' => 'Expedited',
-                    'Priority' => 'Priority',
-                ],
+                'choices' => ShippingCategories::VALUES,
                 'constraints' => [
                     new NotBlank(['groups' => ['odiseo']]),
                 ],

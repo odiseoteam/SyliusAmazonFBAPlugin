@@ -11,6 +11,7 @@ sylius_fixtures:
                                 client_secret: '%env(resolve:ODISEO_AMAZON_FBA_CLIENT_SECRET)%'
                                 refresh_token: '%env(resolve:ODISEO_AMAZON_FBA_REFRESH_TOKEN)%'
                                 sandbox: '%env(bool:ODISEO_AMAZON_FBA_SANDBOX)%'
+                                country_code: 'US'
                                 enabled: true
 
                 shipping_method:

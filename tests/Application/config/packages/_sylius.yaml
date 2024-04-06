@@ -21,9 +21,6 @@ sylius_api:
 
 sylius_shipping:
     resources:
-        shipping_method:
-            classes:
-                repository: Tests\Odiseo\SyliusAmazonFBAPlugin\Application\Repository\ShippingMethodRepository
         shipment:
             classes:
                 model: Tests\Odiseo\SyliusAmazonFBAPlugin\Application\Entity\Shipment

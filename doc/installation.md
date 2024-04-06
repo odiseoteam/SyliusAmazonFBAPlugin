@@ -56,39 +56,7 @@ class Shipment extends BaseShipment implements AmazonFBAAwareInterface
 }
 ```
 
-```php
-<?php
-// src/Repository/ShippingMethodRepository.php
-
-// ...
-use Odiseo\SyliusAmazonFBAPlugin\Repository\ShippingMethodRepositoryInterface;
-use Odiseo\SyliusAmazonFBAPlugin\Repository\ShippingMethodRepositoryTrait;
-use Sylius\Bundle\CoreBundle\Doctrine\ORM\ShippingMethodRepository as BaseShippingMethodRepository;
-
-class ShippingMethodRepository extends BaseShippingMethodRepository implements ShippingMethodRepositoryInterface
-{
-    use ShippingMethodRepositoryTrait;
-
-    // ...
-}
-```
-
-```yml
-# config/packages/_sylius.yaml
-sylius_shipping:
-    resources:
-        shipping_method:
-            classes:
-                repository: App\Repository\ShippingMethodRepository
-```
-
-6. Add the environment variables
-
-```yml
-ODISEO_AMAZON_FBA_MARKETPLACE_ID=EDITME
-```
-
-7. Finish the installation updating the database schema and installing assets
+6. Finish the installation updating the database schema and installing assets
 
 ```
 php bin/console doctrine:migrations:migrate

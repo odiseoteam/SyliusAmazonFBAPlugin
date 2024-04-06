@@ -36,6 +36,7 @@ class AmazonFBAConfigurationExampleFactory implements ExampleFactoryInterface
         $amazonFBAConfiguration->setClientId($options['client_id']);
         $amazonFBAConfiguration->setClientSecret($options['client_secret']);
         $amazonFBAConfiguration->setRefreshToken($options['refresh_token']);
+        $amazonFBAConfiguration->setCountryCode($options['country_code']);
         $amazonFBAConfiguration->setSandbox($options['sandbox']);
         $amazonFBAConfiguration->setEnabled($options['enabled']);
 
@@ -49,6 +50,7 @@ class AmazonFBAConfigurationExampleFactory implements ExampleFactoryInterface
             ->setRequired('client_id')
             ->setRequired('client_secret')
             ->setRequired('refresh_token')
+            ->setRequired('country_code')
             ->setDefault('sandbox', true)
             ->setDefault('enabled', false)
             ->setAllowedTypes('sandbox', 'bool')

@@ -17,6 +17,7 @@ class AmazonFBAConfigurationFixture extends AbstractResourceFixture
         $node->scalarNode('client_id')->cannotBeEmpty();
         $node->scalarNode('client_secret')->cannotBeEmpty();
         $node->scalarNode('refresh_token')->cannotBeEmpty();
+        $node->scalarNode('country_code')->cannotBeEmpty();
         $node->booleanNode('sandbox');
         $node->booleanNode('enabled');
     }

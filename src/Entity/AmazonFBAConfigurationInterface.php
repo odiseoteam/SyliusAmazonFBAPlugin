@@ -30,4 +30,8 @@ interface AmazonFBAConfigurationInterface extends
     public function isSandbox(): ?bool;
 
     public function setSandbox(?bool $sandbox): void;
+
+    public function getCountryCode(): ?string;
+
+    public function setCountryCode(?string $countryCode): void;
 }

@@ -8,15 +8,14 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use Odiseo\SyliusAmazonFBAPlugin\Entity\AmazonFBAConfigurationInterface;
 use Odiseo\SyliusAmazonFBAPlugin\Provider\EnabledAmazonFBAConfigurationProvider;
+use Odiseo\SyliusAmazonFBAPlugin\Utils\Marketplace;
+use Odiseo\SyliusAmazonFBAPlugin\Utils\Regions;
 use Psr\Http\Message\ResponseInterface;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class AmazonFBAClient
 {
-    private const SP_API_SANDBOX_BASE_URL = 'https://sandbox.sellingpartnerapi-eu.amazon.com';
-    private const SP_API_PRODUCTION_BASE_URL = 'https://sellingpartnerapi-eu.amazon.com/';
-    private const API_SANDBOX_BASE_URL = 'https://api.sandbox.amazon.co.uk';
-    private const API_PRODUCTION_BASE_URL = 'https://api.amazon.co.uk';
+    private const API_SANDBOX_BASE_URL = 'https://api.sandbox.amazon.com';
+    private const API_PRODUCTION_BASE_URL = 'https://api.amazon.com';
 
     private AmazonFBAConfigurationInterface $amazonFBAConfiguration;
 
@@ -36,6 +35,16 @@ class AmazonFBAClient
         $this->amazonFBAConfiguration = $amazonFBAConfiguration;
 
         $this->client = new Client();
+    }
+
+    public function getMarketplaceId(): string
+    {
+        /** @var string $countryCode */
+        $countryCode = $this->amazonFBAConfiguration->getCountryCode();
+
+        $country = Marketplace::getCountry($countryCode);
+
+        return $country['id'];
     }
 
     public function query(string $endpoint, array $queryParameters = []): ResponseInterface
@@ -91,7 +100,7 @@ class AmazonFBAClient
         }
     }
 
-    protected function generateToken(): string|false
+    private function generateToken(): string|false
     {
         $baseUrl = $this->amazonFBAConfiguration->isSandbox() ? self::API_SANDBOX_BASE_URL : self::API_PRODUCTION_BASE_URL;
         $endpoint = $baseUrl.'/'.'auth/o2/token';
@@ -118,7 +127,13 @@ class AmazonFBAClient
 
     private function getSpApiEndpoint(string $endpointAction): string
     {
-        $baseUrl = $this->amazonFBAConfiguration->isSandbox() ? self::SP_API_SANDBOX_BASE_URL : self::SP_API_PRODUCTION_BASE_URL;
+        /** @var string $countryCode */
+        $countryCode = $this->amazonFBAConfiguration->getCountryCode();
+
+        $country = Marketplace::getCountry($countryCode);
+        $region = Regions::getRegion($country['region']);
+
+        $baseUrl = $this->amazonFBAConfiguration->isSandbox() ? $region['sandbox_url'] : $region['production_url'];
 
         return $baseUrl.'/'.$endpointAction;
     }
