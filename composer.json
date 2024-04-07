@@ -7,7 +7,7 @@
         "sylius-amazon-fba"
     ],
     "description": "Amazon FBA plugin for Sylius. Adds shipping rates calculator to your store",
-    "license": "MIT",
+    "license": "proprietary",
     "require": {
         "php": "^8.0",
         "sylius/sylius": "^1.12",

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace spec\Odiseo\SyliusAmazonFBAPlugin\Entity;
 
 use Odiseo\SyliusAmazonFBAPlugin\Entity\AmazonFBAConfiguration;
@@ -25,7 +27,7 @@ class AmazonFBAConfigurationSpec extends ObjectBehavior
         $this->shouldImplement(TimestampableInterface::class);
     }
 
-    public function it_implements_easy_post_configuration_interface(): void
+    public function it_implements_amazon_fba_configuration_interface(): void
     {
         $this->shouldImplement(AmazonFBAConfigurationInterface::class);
     }

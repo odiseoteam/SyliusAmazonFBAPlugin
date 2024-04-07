@@ -1,0 +1,14 @@
+services:
+    odiseo_sylius_amazon_fba_plugin.page.admin.amazon_fbax_configuration.index_page:
+        class: Tests\Odiseo\SyliusAmazonFBAPlugin\Behat\Page\Admin\AmazonFBAConfiguration\IndexPage
+        parent: sylius.behat.page.admin.crud.index
+        public: false
+        arguments:
+            - 'odiseo_sylius_amazon_fba_plugin_admin_amazon_fba_configuration_index'
+
+    odiseo_sylius_amazon_fba_plugin.page.admin.amazon_fba_configuration.create_page:
+        class: Tests\Odiseo\SyliusAmazonFBAPlugin\Behat\Page\Admin\AmazonFBAConfiguration\CreatePage
+        parent: sylius.behat.page.admin.crud.create
+        public: false
+        arguments:
+            - 'odiseo_sylius_amazon_fba_plugin_admin_amazon_fba_configuration_create'
