@@ -27,11 +27,11 @@ interface AmazonFBAConfigurationInterface extends
 
     public function setRefreshToken(?string $refreshToken): void;
 
-    public function isSandbox(): ?bool;
-
-    public function setSandbox(?bool $sandbox): void;
-
     public function getCountryCode(): ?string;
 
     public function setCountryCode(?string $countryCode): void;
+
+    public function isSandbox(): bool;
+
+    public function setSandbox(bool $sandbox): void;
 }

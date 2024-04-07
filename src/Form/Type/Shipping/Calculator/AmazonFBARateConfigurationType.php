@@ -20,6 +20,7 @@ final class AmazonFBARateConfigurationType extends AbstractType
     {
         $builder
             ->add('speed_category', ChoiceType::class, [
+                // phpcs:ignore
                 'label' => 'odiseo_sylius_amazon_fba_plugin.form.shipping_calculator.amazon_fba_rate_configuration.speed_category',
                 'choices' => ShippingCategories::VALUES,
                 'constraints' => [
@@ -27,10 +28,15 @@ final class AmazonFBARateConfigurationType extends AbstractType
                 ],
             ])
             ->add('default_amount', MoneyType::class, [
+                // phpcs:ignore
                 'label' => 'odiseo_sylius_amazon_fba_plugin.form.shipping_calculator.amazon_fba_rate_configuration.default_amount',
                 'constraints' => [
                     new NotBlank(['groups' => ['odiseo']]),
-                    new Range(['min' => 0, 'minMessage' => 'sylius.shipping_method.calculator.min', 'groups' => ['odiseo']]),
+                    new Range([
+                        'min' => 0,
+                        'minMessage' => 'sylius.shipping_method.calculator.min',
+                        'groups' => ['odiseo'],
+                    ]),
                     new Type(['type' => 'integer', 'groups' => ['odiseo']]),
                 ],
                 'currency' => $options['currency'],

@@ -14,10 +14,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class AmazonFBAConfigurationExampleFactory implements ExampleFactoryInterface
 {
     protected FakerGenerator $faker;
+
     protected OptionsResolver $optionsResolver;
 
     public function __construct(
-        protected FactoryInterface $amazonFBAConfigurationFactory
+        protected FactoryInterface $amazonFBAConfigurationFactory,
     ) {
         $this->faker = Factory::create();
         $this->optionsResolver = new OptionsResolver();

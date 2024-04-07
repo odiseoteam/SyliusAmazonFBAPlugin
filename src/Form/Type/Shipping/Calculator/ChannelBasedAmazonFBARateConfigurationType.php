@@ -17,7 +17,7 @@ final class ChannelBasedAmazonFBARateConfigurationType extends AbstractType
             'entry_type' => AmazonFBARateConfigurationType::class,
             'entry_options' => fn (ChannelInterface $channel): array => [
                 'label' => $channel->getName(),
-                'currency' => $channel->getBaseCurrency()->getCode(),
+                'currency' => $channel->getBaseCurrency()?->getCode(),
             ],
         ]);
     }

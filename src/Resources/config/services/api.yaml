@@ -2,7 +2,6 @@ services:
     odiseo_sylius_amazon_fba_plugin.api.amazon_fba_client:
         class: Odiseo\SyliusAmazonFBAPlugin\Api\AmazonFBAClient
         arguments:
-            #- '@snc_redis.default'
             - '@odiseo_sylius_amazon_fba_plugin.provider.enabled_amazon_fba_configuration'
         lazy: true
 

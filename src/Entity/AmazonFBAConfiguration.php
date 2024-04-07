@@ -22,9 +22,9 @@ class AmazonFBAConfiguration implements AmazonFBAConfigurationInterface
 
     protected ?string $refreshToken = null;
 
-    protected ?bool $sandbox = true;
-
     protected ?string $countryCode = null;
+
+    protected bool $sandbox = true;
 
     public function __construct()
     {
@@ -76,16 +76,6 @@ class AmazonFBAConfiguration implements AmazonFBAConfigurationInterface
         $this->refreshToken = $refreshToken;
     }
 
-    public function isSandbox(): ?bool
-    {
-        return $this->sandbox;
-    }
-
-    public function setSandbox(?bool $sandbox): void
-    {
-        $this->sandbox = (bool) $sandbox;
-    }
-
     public function getCountryCode(): ?string
     {
         return $this->countryCode;
@@ -94,5 +84,15 @@ class AmazonFBAConfiguration implements AmazonFBAConfigurationInterface
     public function setCountryCode(?string $countryCode): void
     {
         $this->countryCode = $countryCode;
+    }
+
+    public function isSandbox(): bool
+    {
+        return $this->sandbox;
+    }
+
+    public function setSandbox(bool $sandbox): void
+    {
+        $this->sandbox = $sandbox;
     }
 }

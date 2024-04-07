@@ -21,11 +21,9 @@ final class AmazonFBAManager
 
     public function getRates(OrderInterface $order): array
     {
-        $channel = $order->getChannel();
+        $bodyRequest = $this->buildFBAOrderPreviewBodyRequest($order);
 
-        $bodyRequest = $this->buildFBAOrderPreviewBodyRequest($order, $channel);
-
-        if (!empty($this->rates)) {
+        if (count($this->rates) > 0) {
             return $this->rates;
         }
 
@@ -33,13 +31,16 @@ final class AmazonFBAManager
             $response = $this->amazonFBAClient->request(
                 'fba/outbound/2020-07-01/fulfillmentOrders/preview',
                 'POST',
-                $bodyRequest
+                $bodyRequest,
             );
         } catch (ClientException $e) {
-            $arrayResponse = json_decode((string) $e->getResponse()->getBody(), true);
+            /** @var array $arrayResponse */
+            $arrayResponse = json_decode((string) $e->getResponse()?->getBody(), true);
+
             $this->logger->debug('Problem getting rates.');
+
             $errors = $arrayResponse['errors'] ?? [];
-            if (!empty($errors) && !empty($errors[0]['message'])) {
+            if (count($errors) > 0 && count($errors[0]['message']) > 0) {
                 $this->logger->debug($errors[0]['message']);
             }
 
@@ -51,30 +52,40 @@ final class AmazonFBAManager
             return [];
         }
 
-        $arrayResponse = json_decode($response->getBody()->getContents(), true);
-        $FBAPreviews = $arrayResponse['payload']['fulfillmentPreviews'];
-
         $servicesRates = [];
+
+        /** @var array $arrayResponse */
+        $arrayResponse = json_decode($response->getBody()->getContents(), true);
+
+        $FBAPreviews = $arrayResponse['payload']['fulfillmentPreviews'] ?? [];
         foreach ($FBAPreviews as $FBAPreview) {
             if ($FBAPreview['isFulfillable'] === false) {
                 continue;
             }
-            $FBAPerOrderFulfillmentFeeIndex = array_search('FBAPerOrderFulfillmentFee', array_column($FBAPreview['estimatedFees'], 'name'));
+
+            $FBAPerOrderFulfillmentFeeIndex = array_search(
+                'FBAPerOrderFulfillmentFee',
+                array_column($FBAPreview['estimatedFees'], 'name'),
+                true,
+            );
+
             $earliestArrivalDate = $FBAPreview['fulfillmentPreviewShipments'][0]['earliestArrivalDate'];
             $earliestArrivalDate = (new \DateTime($earliestArrivalDate))->format('Y-m-d');
+
             $latestArrivalDate = $FBAPreview['fulfillmentPreviewShipments'][0]['latestArrivalDate'];
             $latestArrivalDate = (new \DateTime($latestArrivalDate))->format('Y-m-d');
+
             if ($FBAPerOrderFulfillmentFeeIndex !== false) {
                 $servicesRates[] = [
                     'shippingSpeedCategory' => $FBAPreview['shippingSpeedCategory'],
                     'amount' => $FBAPreview['estimatedFees'][$FBAPerOrderFulfillmentFeeIndex]['amount']['value'],
                     'earliestArrivalDate' => $earliestArrivalDate,
-                    'latestArrivalDate' => $latestArrivalDate
+                    'latestArrivalDate' => $latestArrivalDate,
                 ];
             }
         }
 
-        if (!empty($servicesRates)) {
+        if (count($servicesRates) > 0) {
             $this->rates = $servicesRates;
         }
 
@@ -88,6 +99,7 @@ final class AmazonFBAManager
         string $shippingSpeedCategory,
         bool $keepOnHold = true,
     ): void {
+        /** @var ChannelInterface $channel */
         $channel = $order->getChannel();
 
         $bodyRequest = $this->buildFBAOrderBodyRequest($order, $channel, $shippingSpeedCategory, $keepOnHold);
@@ -96,14 +108,17 @@ final class AmazonFBAManager
             $this->amazonFBAClient->request(
                 'fba/outbound/2020-07-01/fulfillmentOrders',
                 'POST',
-                $bodyRequest
+                $bodyRequest,
             );
         } catch (ClientException $e) {
-            $arrayResponse = json_decode((string) $e->getResponse()->getBody(), true);
+            /** @var array $arrayResponse */
+            $arrayResponse = json_decode((string) $e->getResponse()?->getBody(), true);
+
             $this->logger->debug('Problem creating order.');
+
             $errors = $arrayResponse['errors'] ?? [];
-            if (!empty($errors) && !empty($errors[0]['message'])) {
-                $this->logger->debug($errors[0]['message']);;
+            if (count($errors) > 0 && count($errors[0]['message']) > 0) {
+                $this->logger->debug($errors[0]['message']);
             }
         } catch (\Exception $e) {
             $this->logger->debug('Problem creating order.');
@@ -116,22 +131,28 @@ final class AmazonFBAManager
         string $shippingSpeedCategory,
         bool $keepOnHold = false,
     ): void {
+        /** @var ChannelInterface $channel */
         $channel = $order->getChannel();
 
         $bodyRequest = $this->buildFBAOrderBodyRequest($order, $channel, $shippingSpeedCategory, $keepOnHold);
 
+        $id = ((string) $channel->getCode()) . '-' . ((string) $order->getId());
+
         try {
             $this->amazonFBAClient->request(
-                'fba/outbound/2020-07-01/fulfillmentOrders/'.$channel->getCode().'-'.$order->getId(),
+                'fba/outbound/2020-07-01/fulfillmentOrders/' . $id,
                 'PUT',
-                $bodyRequest
+                $bodyRequest,
             );
         } catch (ClientException $e) {
-            $arrayResponse = json_decode((string) $e->getResponse()->getBody(), true);
+            /** @var array $arrayResponse */
+            $arrayResponse = json_decode((string) $e->getResponse()?->getBody(), true);
+
             $this->logger->debug('Problem confirming order.');
+
             $errors = $arrayResponse['errors'] ?? [];
-            if (!empty($errors) && !empty($errors[0]['message'])) {
-                $this->logger->debug($errors[0]['message']);;
+            if (count($errors) > 0 && count($errors[0]['message']) > 0) {
+                $this->logger->debug($errors[0]['message']);
             }
         } catch (\Exception $e) {
             $this->logger->debug('Problem confirming order.');
@@ -142,19 +163,25 @@ final class AmazonFBAManager
     public function cancelFulfillmentOrders(
         OrderInterface $order,
     ): void {
+        /** @var ChannelInterface $channel */
         $channel = $order->getChannel();
+
+        $id = ((string) $channel->getCode()) . '-' . ((string) $order->getId());
 
         try {
             $this->amazonFBAClient->request(
-                '/fba/outbound/2020-07-01/fulfillmentOrders/'.$channel->getCode().'-'.$order->getId().'/cancel',
+                '/fba/outbound/2020-07-01/fulfillmentOrders/' . $id . '/cancel',
                 'PUT',
             );
         } catch (ClientException $e) {
-            $arrayResponse = json_decode((string) $e->getResponse()->getBody(), true);
+            /** @var array $arrayResponse */
+            $arrayResponse = json_decode((string) $e->getResponse()?->getBody(), true);
+
             $this->logger->debug('Problem cancelling order.');
+
             $errors = $arrayResponse['errors'] ?? [];
-            if (!empty($errors) && !empty($errors[0]['message'])) {
-                $this->logger->debug($errors[0]['message']);;
+            if (count($errors) > 0 && count($errors[0]['message']) > 0) {
+                $this->logger->debug($errors[0]['message']);
             }
         } catch (\Exception $e) {
             $this->logger->debug('Problem cancelling order.');
@@ -166,16 +193,37 @@ final class AmazonFBAManager
     {
         $queryParameters = $this->buildFBAInventoryQueryParameters($skus);
 
-        $response = $this->amazonFBAClient->query(
-            '/fba/inventory/v1/summaries',
-            $queryParameters
-        );
+        try {
+            $response = $this->amazonFBAClient->query(
+                '/fba/inventory/v1/summaries',
+                $queryParameters,
+            );
+        } catch (ClientException $e) {
+            /** @var array $arrayResponse */
+            $arrayResponse = json_decode((string) $e->getResponse()?->getBody(), true);
 
-        $arrayResponse = json_decode((string) $response->getBody(), true);
+            $this->logger->debug('Problem getting inventory.');
+
+            $errors = $arrayResponse['errors'] ?? [];
+            if (count($errors) > 0 && count($errors[0]['message']) > 0) {
+                $this->logger->debug($errors[0]['message']);
+            }
+
+            return [];
+        } catch (\Exception $e) {
+            $this->logger->debug('Problem getting inventory.');
+            $this->logger->debug($e->getMessage());
+
+            return [];
+        }
+
+        /** @var array $arrayResponse */
+        $arrayResponse = json_decode($response->getBody()->getContents(), true);
+
         return $arrayResponse['payload']['inventorySummaries'] ?? [];
     }
 
-    private function buildFBAOrderPreviewBodyRequest(OrderInterface $order, ChannelInterface $channel): array
+    private function buildFBAOrderPreviewBodyRequest(OrderInterface $order): array
     {
         $address = $order->getShippingAddress();
         if (null === $address) {
@@ -189,7 +237,7 @@ final class AmazonFBAManager
             $bodyItems[] = [
                 'quantity' => $item->getQuantity(),
                 'sellerFulfillmentOrderItemId' => $item->getId(),
-                'sellerSku' => $item->getVariant()->getCode(),
+                'sellerSku' => $item->getVariant()?->getCode(),
             ];
         }
 
@@ -200,7 +248,7 @@ final class AmazonFBAManager
                 'countryCode' => $address->getCountryCode(),
                 'name' => $address->getFullName(),
                 'postalCode' => $address->getPostcode(),
-                'email' => $channel->getContactEmail(),
+                'email' => $order->getCustomer()?->getEmail(),
                 'phoneNumber' => $address->getPhoneNumber(),
             ],
             'items' => $bodyItems,
@@ -214,16 +262,25 @@ final class AmazonFBAManager
         string $shippingSpeedCategory,
         bool $keepOnHold = true,
     ): array {
-        $bodyItems = [];
         $address = $order->getShippingAddress();
+        if (null === $address) {
+            return [];
+        }
+
+        $bodyItems = [];
+
         $items = $order->getItems();
         foreach ($items as $item) {
             $bodyItems[] = [
                 'quantity' => $item->getQuantity(),
                 'sellerFulfillmentOrderItemId' => $item->getId(),
-                'sellerSku' => $item->getVariant()->getCode(),
+                'sellerSku' => $item->getVariant()?->getCode(),
             ];
         }
+
+        $id = ((string) $channel->getCode()) . '-' . ((string) $order->getId());
+        $comment = 'Order from ' . ((string) $channel->getCode()) . '. Order #' . ((string) $order->getNumber());
+
         return [
             'destinationAddress' => [
                 'addressLine1' => $address->getStreet(),
@@ -231,21 +288,21 @@ final class AmazonFBAManager
                 'countryCode' => $address->getCountryCode(),
                 'name' => $address->getFullName(),
                 'postalCode' => $address->getPostcode(),
-                'email' => $order->getCustomer()->getEmail(),
-                'phoneNumber' => $address->getPhoneNumber()
+                'email' => $order->getCustomer()?->getEmail(),
+                'phoneNumber' => $address->getPhoneNumber(),
             ],
-            'displayableOrderComment' => 'Order from '.$channel->getCode().'. Order #'.$order->getNumber(),
-            'displayableOrderDate' => $order->getCreatedAt()->format('Y-m-d'),
-            'displayableOrderId' => $channel->getCode().'-'.$order->getId(),
             'items' => $bodyItems,
-            'sellerFulfillmentOrderId' => $channel->getCode().'-'.$order->getId(),
-            'shippingSpeedCategory' => $shippingSpeedCategory,
             'marketplaceId' => $this->amazonFBAClient->getMarketplaceId(),
+            'displayableOrderComment' => $comment,
+            'displayableOrderDate' => $order->getCreatedAt()?->format('Y-m-d'),
+            'displayableOrderId' => $id,
+            'sellerFulfillmentOrderId' => $id,
+            'shippingSpeedCategory' => $shippingSpeedCategory,
             'fulfillmentAction' => $keepOnHold ? 'Hold' : 'Ship',
             'notificationEmails' => [
-                $order->getCustomer()->getEmail(),
+                $order->getCustomer()?->getEmail(),
                 $channel->getContactEmail(),
-            ]
+            ],
         ];
     }
 
@@ -256,7 +313,7 @@ final class AmazonFBAManager
             'granularityType' => 'Marketplace',
             'granularityId' => $this->amazonFBAClient->getMarketplaceId(),
             'sellerSkus' => implode(',', $skus),
-            'marketplaceIds' => $this->amazonFBAClient->getMarketplaceId()
+            'marketplaceIds' => $this->amazonFBAClient->getMarketplaceId(),
         ];
     }
 }

@@ -20,9 +20,6 @@ final class AmazonFBAConfigurationType extends AbstractResourceType
 
         $builder
             ->addEventSubscriber(new AddCodeFormSubscriber())
-            ->add('sandbox', CheckboxType::class, [
-                'label' => 'odiseo_sylius_amazon_fba_plugin.form.amazon_fba_configuration.sandbox',
-            ])
             ->add('clientId', TextType::class, [
                 'label' => 'odiseo_sylius_amazon_fba_plugin.form.amazon_fba_configuration.client_id',
             ])
@@ -36,6 +33,9 @@ final class AmazonFBAConfigurationType extends AbstractResourceType
             ->add('countryCode', ChoiceType::class, [
                 'label' => 'sylius.ui.country',
                 'choices' => Countries::VALUES,
+            ])
+            ->add('sandbox', CheckboxType::class, [
+                'label' => 'odiseo_sylius_amazon_fba_plugin.form.amazon_fba_configuration.sandbox',
             ])
             ->add('enabled', CheckboxType::class, [
                 'label' => 'sylius.ui.enabled',

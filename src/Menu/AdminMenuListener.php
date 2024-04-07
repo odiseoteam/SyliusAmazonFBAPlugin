@@ -19,7 +19,8 @@ final class AdminMenuListener
             $item = $menu;
         }
 
-        $item->addChild('amazonFBA', ['route' => 'odiseo_sylius_amazon_fba_plugin_admin_amazon_fba_configuration_index'])
+        $item
+            ->addChild('amazonFBA', ['route' => 'odiseo_sylius_amazon_fba_plugin_admin_amazon_fba_configuration_index'])
             ->setLabel('odiseo_sylius_amazon_fba_plugin.menu.admin.amazon_fba')
             ->setLabelAttribute('icon', 'cog')
         ;

@@ -6,6 +6,8 @@ namespace Odiseo\SyliusAmazonFBAPlugin\Assigner;
 
 use Odiseo\SyliusAmazonFBAPlugin\Api\AmazonFBAManager;
 use Odiseo\SyliusAmazonFBAPlugin\Entity\AmazonFBAAwareInterface;
+use Sylius\Component\Core\Model\ChannelInterface;
+use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\ShipmentInterface;
 
 final class ShipmentDateAssigner implements ShipmentDateAssignerInterface
@@ -21,12 +23,14 @@ final class ShipmentDateAssigner implements ShipmentDateAssignerInterface
             return;
         }
 
+        /** @var OrderInterface $order */
         $order = $shipment->getOrder();
+        /** @var ChannelInterface $channel */
         $channel = $order->getChannel();
 
         $channelCode = $channel->getCode();
 
-        $configuration = $shipment->getMethod()->getConfiguration();
+        $configuration = $shipment->getMethod()?->getConfiguration();
 
         if (!isset($configuration[$channelCode])) {
             return;

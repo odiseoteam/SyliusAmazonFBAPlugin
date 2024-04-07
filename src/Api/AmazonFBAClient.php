@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Odiseo\SyliusAmazonFBAPlugin\Api;
 
 use GuzzleHttp\Client;
-use GuzzleHttp\Exception\ClientException;
 use Odiseo\SyliusAmazonFBAPlugin\Entity\AmazonFBAConfigurationInterface;
 use Odiseo\SyliusAmazonFBAPlugin\Provider\EnabledAmazonFBAConfigurationProvider;
 use Odiseo\SyliusAmazonFBAPlugin\Utils\Marketplace;
@@ -15,6 +14,7 @@ use Psr\Http\Message\ResponseInterface;
 class AmazonFBAClient
 {
     private const API_SANDBOX_BASE_URL = 'https://api.sandbox.amazon.com';
+
     private const API_PRODUCTION_BASE_URL = 'https://api.amazon.com';
 
     private AmazonFBAConfigurationInterface $amazonFBAConfiguration;
@@ -22,7 +22,6 @@ class AmazonFBAClient
     private Client $client;
 
     public function __construct(
-        //private \Redis $redis,
         private EnabledAmazonFBAConfigurationProvider $enabledAmazonFBAConfigurationProvider,
     ) {
         $amazonFBAConfiguration = $this->enabledAmazonFBAConfigurationProvider->getConfiguration();
@@ -49,8 +48,9 @@ class AmazonFBAClient
 
     public function query(string $endpoint, array $queryParameters = []): ResponseInterface
     {
-        $accessToken = $this->generateToken();
         $endpoint = $this->getSpApiEndpoint($endpoint);
+
+        $accessToken = $this->generateToken();
 
         return $this->client->request(
             'GET',
@@ -61,49 +61,36 @@ class AmazonFBAClient
                     'Content-Type' => 'application/json',
                 ],
                 'query' => $queryParameters,
-            ]
+            ],
         );
     }
 
-    public function request(
-        string $endpoint,
-        string $method = 'POST',
-        array $requestBody = [],
-        bool $forceGenerateAccessToken = false
-    ): ResponseInterface {
-        //$accessToken = $this->redis->get('app.amazon_api.access_token');
-        //if (!$accessToken || $forceGenerateAccessToken) {
-            $accessToken = $this->generateToken();
-        //    $this->redis->set('app.amazon_api.access_token', $accessToken);
-        //}
+    public function request(string $endpoint, string $method = 'POST', array $requestBody = []): ResponseInterface
+    {
+        $endpoint = $this->getSpApiEndpoint($endpoint);
 
-        $fullEndpoint = $this->getSpApiEndpoint($endpoint);
+        $accessToken = $this->generateToken();
 
-        try {
-            return $this->client->request(
-                $method,
-                $fullEndpoint,
-                [
-                    'headers' => [
-                        'x-amz-access-token' => $accessToken,
-                        'Content-Type' => 'application/json',
-                    ],
-                    'json' => $requestBody,
-                ]
-            );
-        } catch (ClientException $e) {
-            if ($e->getCode() === 403 && !$forceGenerateAccessToken) {
-                return $this->request($endpoint, $method, $requestBody, true);
-            }
-
-            throw $e;
-        }
+        return $this->client->request(
+            $method,
+            $endpoint,
+            [
+                'headers' => [
+                    'x-amz-access-token' => $accessToken,
+                    'Content-Type' => 'application/json',
+                ],
+                'json' => $requestBody,
+            ],
+        );
     }
 
-    private function generateToken(): string|false
+    private function generateToken(): string
     {
-        $baseUrl = $this->amazonFBAConfiguration->isSandbox() ? self::API_SANDBOX_BASE_URL : self::API_PRODUCTION_BASE_URL;
-        $endpoint = $baseUrl.'/'.'auth/o2/token';
+        $baseUrl = $this->amazonFBAConfiguration->isSandbox() ?
+            self::API_SANDBOX_BASE_URL : self::API_PRODUCTION_BASE_URL
+        ;
+
+        $endpoint = $baseUrl . '/' . 'auth/o2/token';
 
         $response = $this->client->request(
             'POST',
@@ -117,12 +104,14 @@ class AmazonFBAClient
                     'refresh_token' => $this->amazonFBAConfiguration->getRefreshToken(),
                     'client_id' => $this->amazonFBAConfiguration->getClientId(),
                     'client_secret' => $this->amazonFBAConfiguration->getClientSecret(),
-                ]
-            ]
+                ],
+            ],
         );
-        $response = json_decode($response->getBody()->getContents(), true);
 
-        return $response['access_token'];
+        /** @var array $contents */
+        $contents = json_decode($response->getBody()->getContents(), true);
+
+        return $contents['access_token'];
     }
 
     private function getSpApiEndpoint(string $endpointAction): string
@@ -135,6 +124,6 @@ class AmazonFBAClient
 
         $baseUrl = $this->amazonFBAConfiguration->isSandbox() ? $region['sandbox_url'] : $region['production_url'];
 
-        return $baseUrl.'/'.$endpointAction;
+        return $baseUrl . '/' . $endpointAction;
     }
 }

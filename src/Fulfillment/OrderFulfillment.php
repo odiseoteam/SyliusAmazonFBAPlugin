@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Odiseo\SyliusAmazonFBAPlugin\Fulfillment;
 
 use Odiseo\SyliusAmazonFBAPlugin\Api\AmazonFBAManager;
+use Sylius\Component\Core\Model\ChannelInterface;
+use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\ShipmentInterface;
 
 final class OrderFulfillment implements OrderFulfillmentInterface
@@ -16,12 +18,14 @@ final class OrderFulfillment implements OrderFulfillmentInterface
 
     public function createOrder(ShipmentInterface $shipment): void
     {
+        /** @var OrderInterface $order */
         $order = $shipment->getOrder();
+        /** @var ChannelInterface $channel */
         $channel = $order->getChannel();
 
         $channelCode = $channel->getCode();
 
-        $configuration = $shipment->getMethod()->getConfiguration();
+        $configuration = $shipment->getMethod()?->getConfiguration();
 
         if (!isset($configuration[$channelCode])) {
             return;
@@ -35,12 +39,14 @@ final class OrderFulfillment implements OrderFulfillmentInterface
 
     public function confirmOrder(ShipmentInterface $shipment): void
     {
+        /** @var OrderInterface $order */
         $order = $shipment->getOrder();
+        /** @var ChannelInterface $channel */
         $channel = $order->getChannel();
 
         $channelCode = $channel->getCode();
 
-        $configuration = $shipment->getMethod()->getConfiguration();
+        $configuration = $shipment->getMethod()?->getConfiguration();
 
         if (!isset($configuration[$channelCode])) {
             return;
@@ -54,6 +60,7 @@ final class OrderFulfillment implements OrderFulfillmentInterface
 
     public function cancelOrder(ShipmentInterface $shipment): void
     {
+        /** @var OrderInterface $order */
         $order = $shipment->getOrder();
 
         $this->amazonFBAManager->cancelFulfillmentOrders($order);

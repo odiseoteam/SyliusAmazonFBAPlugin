@@ -31,9 +31,6 @@
 
 This is a Sylius Plugin that adds Amazon FBA rates calculator to your store.
 
-[AvaTax demo](https://developer.avalara.com/avatax/avatax-demo)  
-[Understanding AvaTax sandbox accounts](https://help.avalara.com/Avalara_AvaTax_Update/Understanding_AvaTax_sandbox_accounts)
-
 Support Sylius version 1.9+.
 
 ## Demo
