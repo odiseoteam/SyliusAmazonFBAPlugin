@@ -1,3 +1,10 @@
+<!---
+This file is part of the Odiseo Amazon FBA Plugin package, a commercial software.
+Only users who have purchased a valid license and accept to the terms of the License Agreement can install
+and use this program.
+Copyright (c) 2018-2024 - Pablo D'amico
+--->
+
 ## Test the plugin
 
 We are using PHPStan, Psalm, Behat, PHPSpec and PHPUnit to test this plugin.

@@ -5,7 +5,6 @@ default:
                 - sylius.behat.context.hook.doctrine_orm
 
                 - odiseo_sylius_amazon_fba_plugin.context.transform.amazon_fba_configuration
-                - sylius.behat.context.transform.shared_storage
 
                 - sylius.behat.context.setup.channel
                 - sylius.behat.context.setup.admin_security

@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<!--
+    * This file is part of the Odiseo Amazon FBA Plugin package, a commercial software.
+    * Only users who have purchased a valid license and accept to the terms of the License Agreement can install
+    * and use this program.
+    * Copyright (c) 2018-2024 - Pablo D'amico
+-->
+
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                   xmlns:gedmo="http://gediminasm.org/schemas/orm/doctrine-extensions-mapping"
