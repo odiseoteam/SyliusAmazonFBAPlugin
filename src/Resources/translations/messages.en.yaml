@@ -9,6 +9,9 @@ odiseo_sylius_amazon_fba_plugin:
         edit_amazon_fba_configuration: Edit Amazon FBA configuration
         new_amazon_fba_configuration: New Amazon FBA configuration
         manage_configurations: Manage configurations
+        shipping_items_arrive_between_dates: Your items are currently being prepared for shipment and are expected to arrive between <strong>%from_date%</strong> and <strong>%to_date%</strong>
+        shipping_items_arrive_at_date: Your items are currently being prepared for shipment and are expected to arrive at <strong>%date%</strong>
+        shipping_items_times_may_vary: Please note that delivery times may vary based on your location
     menu:
         admin:
             amazon_fba: Amazon FBA

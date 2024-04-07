@@ -1,0 +1,25 @@
+{#
+This file is part of the Odiseo Amazon FBA Plugin package, a commercial software.
+Only users who have purchased a valid license and accept to the terms of the License Agreement can install
+and use this program.
+Copyright (c) 2018-2024 - Pablo D'amico
+#}
+
+{% set earliestArrivalDate = shipment.earliestArrivalDate %}
+{% set latestArrivalDate = shipment.latestArrivalDate %}
+
+{% if latestArrivalDate|date('U') > 'now'|date('U') %}
+    <p id="shipment-date">
+        {% if earliestArrivalDate|date('U') == latestArrivalDate|date('U') %}
+            {{ 'odiseo_sylius_amazon_fba_plugin.ui.shipping_items_arrive_at_date'|trans({
+                '%date%': latestArrivalDate|date('F d, Y'),
+            })|raw }}.
+        {% else %}
+            {{ 'odiseo_sylius_amazon_fba_plugin.ui.shipping_items_arrive_between_dates'|trans({
+                '%from_date%': earliestArrivalDate|date('F d, Y'),
+                '%to_date%': latestArrivalDate|date('F d, Y'),
+            })|raw }}.
+        {% endif %}
+        {{ 'odiseo_sylius_amazon_fba_plugin.ui.shipping_items_times_may_vary'|trans }}.
+    </p>
+{% endif %}

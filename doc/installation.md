@@ -63,7 +63,20 @@ class Shipment extends BaseShipment implements AmazonFBAAwareInterface
 }
 ```
 
-6. Finish the installation updating the database schema and installing assets
+6. Add the shipment delivery box to the order show page. So, you need to run `mkdir -p templates/bundles/SyliusShopBundle/Common/Order` then `cp vendor/sylius/sylius/src/Sylius/Bundle/ShopBundle/Resources/views/Common/Order/_shipments.html.twig templates/bundles/SyliusShopBundle/Common/Order/_shipments.html.twig` and then include the twig template
+
+```twig
+{# ... #}
+{% if state != 'cart' %}
+    <p id="shipment-status" {{ sylius_test_html_attribute('shipment-state') }}>
+        {% include "@SyliusShop/Common/Order/Label/ShipmentState/singleShipmentState.html.twig" with { 'state': state } %}
+    </p>
+    {% include "@OdiseoSyliusAmazonFBAPlugin/Common/Order/_shipment_delivery.html.twig" %}
+{% endif %}
+{# ... #}
+```
+
+7. Finish the installation updating the database schema and installing assets
 
 ```
 php bin/console doctrine:migrations:migrate

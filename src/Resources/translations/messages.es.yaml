@@ -9,6 +9,9 @@ odiseo_sylius_amazon_fba_plugin:
         edit_amazon_fba_configuration: Editar configuración de Amazon FBA
         new_amazon_fba_configuration: Nueva configuración de Amazon FBA
         manage_configurations: Administrar configuraciones
+        shipping_items_arrive_between_dates: Tus artículos están siendo preparados para el envío y se espera que lleguen entre <strong>%from_date%</strong> y <strong>%to_date%</strong>
+        shipping_items_arrive_at_date: Tus artículos están siendo preparados para el envío y se espera que lleguen el <strong>%date%</strong>
+        shipping_items_times_may_vary: Ten en cuenta que los tiempos de entrega pueden variar según tu ubicación
     menu:
         admin:
             amazon_fba: Amazon FBA

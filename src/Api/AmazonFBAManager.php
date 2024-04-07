@@ -47,7 +47,7 @@ final class AmazonFBAManager
 
             $this->logger->debug('Problem getting rates.');
 
-            $error =  $arrayResponse['errors'][0]['message'] ?? null;
+            $error = $arrayResponse['errors'][0]['message'] ?? null;
             if (null !== $error) {
                 $this->logger->debug($error);
             }
@@ -124,7 +124,7 @@ final class AmazonFBAManager
 
             $this->logger->debug('Problem creating order.');
 
-            $error =  $arrayResponse['errors'][0]['message'] ?? null;
+            $error = $arrayResponse['errors'][0]['message'] ?? null;
             if (null !== $error) {
                 $this->logger->debug($error);
             }
@@ -158,7 +158,7 @@ final class AmazonFBAManager
 
             $this->logger->debug('Problem confirming order.');
 
-            $error =  $arrayResponse['errors'][0]['message'] ?? null;
+            $error = $arrayResponse['errors'][0]['message'] ?? null;
             if (null !== $error) {
                 $this->logger->debug($error);
             }
@@ -187,7 +187,7 @@ final class AmazonFBAManager
 
             $this->logger->debug('Problem cancelling order.');
 
-            $error =  $arrayResponse['errors'][0]['message'] ?? null;
+            $error = $arrayResponse['errors'][0]['message'] ?? null;
             if (null !== $error) {
                 $this->logger->debug($error);
             }
@@ -212,7 +212,7 @@ final class AmazonFBAManager
 
             $this->logger->debug('Problem getting inventory.');
 
-            $error =  $arrayResponse['errors'][0]['message'] ?? null;
+            $error = $arrayResponse['errors'][0]['message'] ?? null;
             if (null !== $error) {
                 $this->logger->debug($error);
             }
