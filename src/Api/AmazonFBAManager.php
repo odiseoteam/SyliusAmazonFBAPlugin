@@ -29,13 +29,13 @@ final class AmazonFBAManager
 
     public function getRates(OrderInterface $order): array
     {
-        $bodyRequest = $this->buildFBAOrderPreviewBodyRequest($order);
-
         if (count($this->rates) > 0) {
             return $this->rates;
         }
 
         try {
+            $bodyRequest = $this->buildFBAOrderPreviewBodyRequest($order);
+
             $response = $this->amazonFBAClient->request(
                 'fba/outbound/2020-07-01/fulfillmentOrders/preview',
                 'POST',
@@ -47,9 +47,9 @@ final class AmazonFBAManager
 
             $this->logger->debug('Problem getting rates.');
 
-            $errors = $arrayResponse['errors'] ?? [];
-            if (count($errors) > 0 && count($errors[0]['message']) > 0) {
-                $this->logger->debug($errors[0]['message']);
+            $error =  $arrayResponse['errors'][0]['message'] ?? null;
+            if (null !== $error) {
+                $this->logger->debug($error);
             }
 
             return [];
@@ -110,9 +110,9 @@ final class AmazonFBAManager
         /** @var ChannelInterface $channel */
         $channel = $order->getChannel();
 
-        $bodyRequest = $this->buildFBAOrderBodyRequest($order, $channel, $shippingSpeedCategory, $keepOnHold);
-
         try {
+            $bodyRequest = $this->buildFBAOrderBodyRequest($order, $channel, $shippingSpeedCategory, $keepOnHold);
+
             $this->amazonFBAClient->request(
                 'fba/outbound/2020-07-01/fulfillmentOrders',
                 'POST',
@@ -124,9 +124,9 @@ final class AmazonFBAManager
 
             $this->logger->debug('Problem creating order.');
 
-            $errors = $arrayResponse['errors'] ?? [];
-            if (count($errors) > 0 && count($errors[0]['message']) > 0) {
-                $this->logger->debug($errors[0]['message']);
+            $error =  $arrayResponse['errors'][0]['message'] ?? null;
+            if (null !== $error) {
+                $this->logger->debug($error);
             }
         } catch (\Exception $e) {
             $this->logger->debug('Problem creating order.');
@@ -142,11 +142,11 @@ final class AmazonFBAManager
         /** @var ChannelInterface $channel */
         $channel = $order->getChannel();
 
-        $bodyRequest = $this->buildFBAOrderBodyRequest($order, $channel, $shippingSpeedCategory, $keepOnHold);
-
         $id = ((string) $channel->getCode()) . '-' . ((string) $order->getId());
 
         try {
+            $bodyRequest = $this->buildFBAOrderBodyRequest($order, $channel, $shippingSpeedCategory, $keepOnHold);
+
             $this->amazonFBAClient->request(
                 'fba/outbound/2020-07-01/fulfillmentOrders/' . $id,
                 'PUT',
@@ -158,9 +158,9 @@ final class AmazonFBAManager
 
             $this->logger->debug('Problem confirming order.');
 
-            $errors = $arrayResponse['errors'] ?? [];
-            if (count($errors) > 0 && count($errors[0]['message']) > 0) {
-                $this->logger->debug($errors[0]['message']);
+            $error =  $arrayResponse['errors'][0]['message'] ?? null;
+            if (null !== $error) {
+                $this->logger->debug($error);
             }
         } catch (\Exception $e) {
             $this->logger->debug('Problem confirming order.');
@@ -187,9 +187,9 @@ final class AmazonFBAManager
 
             $this->logger->debug('Problem cancelling order.');
 
-            $errors = $arrayResponse['errors'] ?? [];
-            if (count($errors) > 0 && count($errors[0]['message']) > 0) {
-                $this->logger->debug($errors[0]['message']);
+            $error =  $arrayResponse['errors'][0]['message'] ?? null;
+            if (null !== $error) {
+                $this->logger->debug($error);
             }
         } catch (\Exception $e) {
             $this->logger->debug('Problem cancelling order.');
@@ -199,9 +199,9 @@ final class AmazonFBAManager
 
     public function getInventorySummaries(array $skus): array
     {
-        $queryParameters = $this->buildFBAInventoryQueryParameters($skus);
-
         try {
+            $queryParameters = $this->buildFBAInventoryQueryParameters($skus);
+
             $response = $this->amazonFBAClient->query(
                 '/fba/inventory/v1/summaries',
                 $queryParameters,
@@ -212,9 +212,9 @@ final class AmazonFBAManager
 
             $this->logger->debug('Problem getting inventory.');
 
-            $errors = $arrayResponse['errors'] ?? [];
-            if (count($errors) > 0 && count($errors[0]['message']) > 0) {
-                $this->logger->debug($errors[0]['message']);
+            $error =  $arrayResponse['errors'][0]['message'] ?? null;
+            if (null !== $error) {
+                $this->logger->debug($error);
             }
 
             return [];

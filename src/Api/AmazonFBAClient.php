@@ -21,10 +21,6 @@ use Psr\Http\Message\ResponseInterface;
 
 class AmazonFBAClient
 {
-    private const API_SANDBOX_BASE_URL = 'https://api.sandbox.amazon.com';
-
-    private const API_PRODUCTION_BASE_URL = 'https://api.amazon.com';
-
     private AmazonFBAConfigurationInterface $amazonFBAConfiguration;
 
     private Client $client;
@@ -94,11 +90,7 @@ class AmazonFBAClient
 
     private function generateToken(): string
     {
-        $baseUrl = $this->amazonFBAConfiguration->isSandbox() ?
-            self::API_SANDBOX_BASE_URL : self::API_PRODUCTION_BASE_URL
-        ;
-
-        $endpoint = $baseUrl . '/' . 'auth/o2/token';
+        $endpoint = 'https://api.amazon.com/auth/o2/token';
 
         $response = $this->client->request(
             'POST',
