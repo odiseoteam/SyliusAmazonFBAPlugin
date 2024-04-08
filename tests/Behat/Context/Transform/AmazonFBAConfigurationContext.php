@@ -17,8 +17,8 @@ final class AmazonFBAConfigurationContext implements Context
     }
 
     /**
-     * @Transform /^amazon FBA configuration "([^"]+)"$/
-     * @Transform /^"([^"]+)" amazon FBA configuration/
+     * @Transform /^Amazon FBA configuration "([^"]+)"$/
+     * @Transform /^"([^"]+)" Amazon FBA configuration/
      */
     public function getConfigurationByName(string $code): AmazonFBAConfigurationInterface
     {

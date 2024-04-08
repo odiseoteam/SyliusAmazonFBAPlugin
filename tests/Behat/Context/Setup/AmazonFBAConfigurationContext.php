@@ -19,7 +19,7 @@ final class AmazonFBAConfigurationContext implements Context
     }
 
     /**
-     * @Given there is an existing amazon FBA configuration with :code code
+     * @Given there is an existing Amazon FBA configuration with :code code
      */
     public function thereIsAConfigurationWithCode(string $code): void
     {

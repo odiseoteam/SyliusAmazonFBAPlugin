@@ -22,7 +22,7 @@ final class ManagingAmazonFBAConfigurationsContext implements Context
     }
 
     /**
-     * @Given I want to add a new amazon FBA configuration
+     * @Given I want to add a new Amazon FBA configuration
      */
     public function iWantToAddNewConfiguration(): void
     {
@@ -74,7 +74,7 @@ final class ManagingAmazonFBAConfigurationsContext implements Context
     }
 
     /**
-     * @Then /^the (amazon FBA configuration "([^"]+)") should appear in the admin/
+     * @Then /^the (Amazon FBA configuration "([^"]+)") should appear in the admin/
      */
     public function configurationShouldAppearInTheAdmin(AmazonFBAConfigurationInterface $configuration): void
     {
@@ -98,7 +98,7 @@ final class ManagingAmazonFBAConfigurationsContext implements Context
     }
 
     /**
-     * @Then I should be notified that there is already an existing amazon FBA configuration with provided code
+     * @Then I should be notified that there is already an existing Amazon FBA configuration with provided code
      */
     public function iShouldBeNotifiedThatThereIsAlreadyAnExistingConfigurationWithSlug(): void
     {
