@@ -30,6 +30,14 @@ Support Sylius version 1.9+.
 - [Installation](doc/installation.md)
 - [Tests](doc/tests.md)
 
+## Screenshots
+
+<img src="https://github.com/odiseoteam/SyliusAmazonFBAPlugin/blob/master/screenshot_1.png" alt="Amazon FBA configuration list admin" width="650">
+<img src="https://github.com/odiseoteam/SyliusAmazonFBAPlugin/blob/master/screenshot_2.png" alt="Amazon FBA configuration edit admin" width="650">
+<img src="https://github.com/odiseoteam/SyliusAmazonFBAPlugin/blob/master/screenshot_3.png" alt="Amazon FBA shipping method edit admin" width="650">
+<img src="https://github.com/odiseoteam/SyliusAmazonFBAPlugin/blob/master/screenshot_4.png" alt="Amazon FBA shipping method select shop" width="650">
+<img src="https://github.com/odiseoteam/SyliusAmazonFBAPlugin/blob/master/screenshot_5.png" alt="Amazon FBA order show shop" width="650">
+
 ## Credits
 
 This plugin is maintained by <a href="https://odiseo.io">Odiseo</a>. Want us to help you with this plugin or any Sylius project? Contact us on <a href="mailto:team@odiseo.com.ar">team@odiseo.com.ar</a>.
