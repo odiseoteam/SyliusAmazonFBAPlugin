@@ -28,6 +28,8 @@ Support Sylius version 1.9+.
 ## Documentation
 
 - [Installation](doc/installation.md)
+- [Setup](doc/setup.md)
+- [Commands](doc/commands.md)
 - [Tests](doc/tests.md)
 
 ## Screenshots
