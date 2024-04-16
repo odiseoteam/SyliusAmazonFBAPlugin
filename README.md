@@ -3,6 +3,21 @@
         <img src="https://github.com/odiseoteam/SyliusAmazonFBAPlugin/blob/master/amazon-logo.png" alt="Amazon Logo" width="600px"/>
     </a>
     <br />
+    <a href="https://packagist.org/packages/odiseoteam/sylius-amazon-fba-plugin" title="License" target="_blank">
+        <img src="https://img.shields.io/packagist/l/odiseoteam/sylius-amazon-fba-plugin.svg" />
+    </a>
+    <a href="https://packagist.org/packages/odiseoteam/sylius-amazon-fba-plugin" title="Version" target="_blank">
+        <img src="https://img.shields.io/packagist/v/odiseoteam/sylius-amazon-fba-plugin.svg" />
+    </a>
+    <a href="https://github.com/odiseoteam/SyliusAmazonFBAPlugin/actions" title="Build Status" target="_blank">
+        <img src="https://img.shields.io/github/actions/workflow/status/odiseoteam/SyliusAmazonFBAPlugin/build.yml" />
+    </a>
+    <a href="https://scrutinizer-ci.com/g/odiseoteam/SyliusAmazonFBAPlugin/" title="Scrutinizer" target="_blank">
+        <img src="https://img.shields.io/scrutinizer/g/odiseoteam/SyliusAmazonFBAPlugin.svg" />
+    </a>
+    <a href="https://packagist.org/packages/odiseoteam/sylius-amazon-fba-plugin" title="Total Downloads" target="_blank">
+        <img src="https://poser.pugx.org/odiseoteam/sylius-amazon-fba-plugin/downloads" />
+    </a>
     <a href="https://sylius-devs.slack.com" title="Slack" target="_blank">
         <img src="https://img.shields.io/badge/community%20chat-slack-FF1493.svg" />
     </a>
