@@ -1,10 +1,3 @@
-<!---
-This file is part of the Odiseo Amazon FBA Plugin package, a commercial software.
-Only users who have purchased a valid license and accept to the terms of the License Agreement can install
-and use this program.
-Copyright (c) 2018-2024 - Pablo D'amico
---->
-
 <p align="center">
     <a href="https://sell.amazon.com/fulfillment-by-amazon" target="_blank" title="AmazonFBA">
         <img src="https://github.com/odiseoteam/SyliusAmazonFBAPlugin/blob/master/amazon-logo.png" alt="Amazon Logo" width="600px"/>

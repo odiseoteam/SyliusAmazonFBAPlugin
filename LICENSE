@@ -1,34 +1,21 @@
-LICENSE AGREEMENT
-on the use of Odiseo Sylius Amazon FBA Plugin
+MIT License
 
-This license agreement (hereinafter referred to as the "Agreement") constitutes a contract between
-Diego D'amico, Pablo D'amico who are the authors of and the owners of the exclusive right to the Odiseo Sylius Amazon FBA
-Plugin (hereinafter referred to as the "Amazon FBA Plugin"), and you (hereinafter referred to as the "User").
+Copyright (c) 2018-2024 Diego D'amico
 
-This Agreement contains definitions and conditions under which the User can use Amazon FBA Plugin.
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-TERMS AND DEFINITIONS
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-The User create one End Product for a client, and you can transfer that single End Product to your client for any fee.
-This license is then transferred to your client.
-
-One license of the Amazon FBA Plugin can be used in a single Sylius online project at same time.
-
-The Amazon FBA Plugin is protected with applicable intellectual property rights, including but not limited to
-copyright, patent, trade secret, trademark, and other intellectual property rights in the Plugin
-(including but not limited to the design, look and feel, algorithms, database structures, methodologies, and know-how
-associated with the Plugin).
-
-The authors of the Amazon FBA Plugin hereby reserves any and all rights, in particular trademarks, copyrights, patents
-and any other intellectual property rights, know-how and business secrets, not expressly assigned or granted to the User
-under this Agreement.
-
-The user agrees to reproduce all copyright and other notices in the copy of the Amazon FBA Plugin made and further
-agrees not to modify or delete any such notices in the Plugin.
-
-The User has no right to sell the Amazon FBA Plugin to other companies or individuals.
-
-The User who is using this Amazon FBA Plugin in an online project accepts that they have purchased from the authors a
-license or permission to use the plugin as mentioned above.
-
-Copyright (c) 2018-2024 - Pablo D'amico
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.

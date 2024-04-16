@@ -1,8 +1,3 @@
-# This file is part of the Odiseo Amazon FBA Plugin package, a commercial software.
-# Only users who have purchased a valid license and accept to the terms of the License Agreement can install
-# and use this program.
-# Copyright (c) 2018-2024 - Pablo D'amico
-
 services:
     odiseo_sylius_amazon_fba_plugin.fulfillment.order:
         class: Odiseo\SyliusAmazonFBAPlugin\Fulfillment\OrderFulfillment
