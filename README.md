@@ -14,7 +14,12 @@
 
 ## Description
 
-This is a Sylius Plugin that adds Amazon FBA rates calculator to your store.
+Connect your Sylius store with Amazon FBA (Fulfillment By Amazon). 
+Enjoy features such as:
+- Inventory Synchronization.
+- Shipping methods with their rates.
+- FBA Order creation on purchase.
+- Stock Updates through cron jobs.
 
 Support Sylius version 1.9+.
 
