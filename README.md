@@ -21,7 +21,7 @@ Copyright (c) 2018-2024 - Pablo D'amico
 
 ## Description
 
-Connect your Sylius store with Amazon FBA (Fulfillment By Amazon). FBA Inventory Synchronisation, Order Synchronisation and Stock Update trough a command.
+Connect your Sylius store with Amazon FBA (Fulfillment By Amazon). FBA Inventory Synchronisation, Order Synchronisation and Stock Update through cronjobs.
 
 Support Sylius version 1.9+.
 
